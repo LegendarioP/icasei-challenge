@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",
+    "@prisma/client": "^5.16.0",
     "axios": "^1.7.2",
     "fastify": "^4.28.0",
     "zod": "^3.23.8"
