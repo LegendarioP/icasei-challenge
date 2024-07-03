@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/styles/style.css" />
+        <script src="/scripts/script-favorite.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+        <title>Icasei Challenge</title>
+    </head>
+
+    <body class="body-content">
+        <aside class="mf-drawer">
+            <div class="side-header"> 
+                <h3>MF_DRAWER</h3>
+            </div>
+            <ul class="side-body">
+                <li id="vids">
+                    <a href="/">
+                        <span>VÍDEOS</span>
+                    </a>
+                </li>
+                <li id="favorites" class="active">
+                    <a href="/favorite">
+                        <span>FAVORITOS</span>
+                        <p class="favorite-number">0</p>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        <section class="mf-videos">
+            <div class="videos-header">
+                <div class="brand-or-title">
+                    <h3>MF_VIDEOS</h3>
+                </div>
+            </div>
+            <div class="videos-body">
+                <ul class="list-videos loading">
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                    <li class="card-video"></li>
+                </ul>
+                
+            </div>
+        </section>
+    </body>
+
+
+</html>

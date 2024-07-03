@@ -1,8 +1,11 @@
 import fastify from 'fastify'
 import cors from '@fastify/cors'
-import { HomeVids } from './routes/home'
 import dotenv from 'dotenv'
-import { Search } from './routes/search'
+import jwt from '@fastify/jwt'
+import { homeVids } from './routes/home'
+import { search } from './routes/search'
+import { authRoutes } from './routes/auth'
+import { favoriteVids } from './routes/favorite'
 
 dotenv.config()
 
@@ -12,8 +15,14 @@ app.register(cors, {
   origin: true,
 })
 
-app.register(HomeVids)
-app.register(Search)
+app.register(jwt, {
+  secret: 'akdgaskodgaskhdgajsdghjkqsgdayjo',
+})
+
+app.register(homeVids)
+app.register(search)
+app.register(authRoutes)
+app.register(favoriteVids)
 
 app.setErrorHandler((error, request, reply) => {
   console.error(error)

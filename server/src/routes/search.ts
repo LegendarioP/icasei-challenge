@@ -2,14 +2,15 @@ import { FastifyInstance } from 'fastify'
 import { getYouTubeData } from './youtubeService'
 import { z } from 'zod'
 
-export async function Search(app: FastifyInstance) {
+export async function search(app: FastifyInstance) {
   const APIKEY = process.env.YOUTUBE_API_KEY
 
   app.post('/search', async (request) => {
     const bodySchema = z.object({
       searchParams: z.string(),
+      pageToken: z.string(),
     })
-    const { searchParams } = bodySchema.parse(request.body)
+    const { searchParams, pageToken } = bodySchema.parse(request.body)
 
     try {
       const data = await getYouTubeData(
@@ -21,13 +22,14 @@ export async function Search(app: FastifyInstance) {
           regionCode: 'BR',
           type: 'video',
           relevanceLanguage: 'pt-br',
+          pageToken,
         },
         APIKEY,
       )
-      console.log(data)
+      // console.log(data)
       return data
     } catch (error) {
-      app.log.error(error)
+      // app.log.error(error)
       return { error: 'Erro ao buscar dados do YouTube' }
     }
   })

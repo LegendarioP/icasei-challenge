@@ -1,8 +1,8 @@
 import { FastifyInstance } from 'fastify'
 import { getYouTubeData } from './youtubeService'
-// import { z } from 'zod'
+import { z } from 'zod'
 
-export async function HomeVids(app: FastifyInstance) {
+export async function homeVids(app: FastifyInstance) {
   const APIKEY = process.env.YOUTUBE_API_KEY
   app.get('/home', async () => {
     try {
@@ -16,10 +16,36 @@ export async function HomeVids(app: FastifyInstance) {
         },
         APIKEY,
       )
-      console.log(data)
+      // console.log(data)
       return data
     } catch (error) {
-      app.log.error(error)
+      // app.log.error(error)
+      return { error: 'Erro ao buscar dados do YouTube' }
+    }
+  })
+  app.post('/loadvideos', async (request) => {
+    const bodySchema = z.object({
+      pageToken: z.string(),
+    })
+
+    const { pageToken } = bodySchema.parse(request.body)
+
+    try {
+      const data = await getYouTubeData(
+        'videos',
+        {
+          part: 'snippet',
+          chart: 'mostPopular',
+          maxResults: '16',
+          regionCode: 'BR',
+          pageToken,
+        },
+        APIKEY,
+      )
+      // console.log(data)
+      return data
+    } catch (error) {
+      // app.log.error(error)
       return { error: 'Erro ao buscar dados do YouTube' }
     }
   })
