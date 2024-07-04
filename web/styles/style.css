@@ -71,6 +71,7 @@ body {
     display: flex;
     justify-content: center;
     /* border-bottom: 1px solid #f0f0f0; */
+    position: relative;
 }
 .side-header svg {
     width: 150px;
@@ -268,7 +269,7 @@ body {
     align-items: center;
 }
 
-.center-login .form-login {
+.center-login form {
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -290,7 +291,7 @@ body {
     padding: .5rem;
     font-size: 1rem;
     border-radius: 5px;
-    border: 1px solid red;
+    border: 1px solid var(--primary_color);
     outline: none;
 }
 
@@ -310,7 +311,9 @@ label {
 
 .button-submit {
     cursor: pointer;
-    background: green;
+    background: var(--color_side_menu);
+    color: var(--color_text_side_menu);
+    font-weight: 600;
     width: 100%;
     height: 40px;
     display: flex;
@@ -318,9 +321,12 @@ label {
     align-items: center;
     border-radius: 8px;
 }
+.toggle-register {
+    font-size: .8rem;
+}
 
 .toggle-register b {
-    color: #0056b3;
+    color: var(--primary_color);
     text-decoration: underline;
     cursor: pointer;
 }
@@ -389,6 +395,15 @@ label {
         /* max-height: 70%; */
     }
 }
+@media(min-width: 768px){
+
+    .close-drawer,
+    .shadow,
+    .menu-mobile,
+    .mf-drawer .user-login {
+        display: none;
+    }
+}
 
 @media(max-width: 768px){
     .modal-content {
@@ -438,8 +453,8 @@ label {
     height: max-content;
     position: relative;
     font-weight: 600;
-    background: blue;
-    color: white;
+    background: var(--color_side_menu);
+    color: var(--color_text_side_menu);
     padding: .5rem 1rem;
     border-radius: 4px;
 }
@@ -519,6 +534,9 @@ label {
     width: 100%;
     display: flex;
 }
+.center-login .hidden {
+    display: none;
+}
 
 
 
@@ -540,6 +558,7 @@ label {
 }
 
 .user-login-button {
+    cursor: pointer;
     white-space: nowrap;
     padding: .6875rem;
     background: var(--color_side_menu);
@@ -552,4 +571,117 @@ label {
     color: var(--color_side_menu);
     background: var(--color_text_side_menu);
     border: 1px solid var(--color_side_menu);
+}
+
+
+@media(max-width:769px){
+    .mf-drawer {
+        transition: .4s ease-in-out;
+        position: fixed;
+        z-index: 10;
+        height: 100%;
+        left: -100%;
+    }
+    .mf-videos {
+        padding: 0;
+    }
+
+    .mf-videos .videos-header {
+        background: #f0f0f0;
+        padding: .5rem;
+    }
+    
+    .mf-videos .videos-body {
+        padding: 0 .5rem;
+    }
+    .user-login {
+        display: none;
+    }
+    
+    .form-get-vids .search-button {
+        max-width: 50px;
+    }
+    .list-videos .card-video {
+        width: 100%;
+        max-width: calc(calc(100% / 2) - 10px );
+        height: calc(calc(100% / 4) - 10px );
+    }
+    .menu-mobile {
+        width: 100%;
+        max-width: 30px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    
+    .menu-mobile div {
+        width: 100%;
+        height: 3px;
+        background-color: var(--primary_color);
+        border-radius: 28px;
+    }
+    
+    .mf-videos .videos-header {
+        gap: 1rem;
+    }
+    .shadow.active {
+        z-index: 10;
+        background: rgba(0,0,0, 0.8);
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+
+    .shadow.active~.mf-drawer {
+        display: flex;
+        border-top-right-radius: 16px;
+        left: 0;
+    }
+    .close-drawer {
+        font-size: 1.3rem;
+        color: var(--color_side_menu);
+        background: var(--color_text_side_menu);
+        border: 1px solid var(--color_side_menu);
+        width: 36px;
+        height: 36px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        border-radius: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .videos-header.right {
+        display: flex;
+        justify-content: flex-start;
+    }
+    .videos-header.right .menu-mobile {
+        height: 40px;
+    }
+    .mf-drawer .user-login {
+        display: flex;
+        justify-content: center;
+    }
+    
+    
+    .mf-drawer .user-login-button {
+        background: var(--color_text_side_menu);
+        color: var(--color_side_menu);
+        font-weight: 600;
+        border: 1px solid var(--color_side_menu);
+    }
+    .modal-content .modal-header h2 {
+        font-size: .8rem;
+    }
+}
+
+@media(max-width:500px){
+    
+    .list-videos .card-video {
+        width: 100%;
+        max-width: 100%;
+        height: calc(calc(100% / 4) - 10px );
+    }
 }

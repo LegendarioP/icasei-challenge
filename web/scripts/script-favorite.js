@@ -204,18 +204,21 @@ async function favoritePage (element, token){
             const vids = response.data.items
             const loadedVids = vids.map(item => {
                 const getURL = item.id
-                const hasFavorited = myFavorites.find(item => item.youtube_idVid == getURL) ? true : false
+                const hasFavorited = myFavorites ? myFavorites.find(item => item.youtube_idVid == getURL) ? true : false : false
                 // console.log(hasFavorited)
                 // console.log(getURL)
                 const titleVid = item.snippet.title
                 const thumbnail = item.snippet.thumbnails.maxres ? item.snippet.thumbnails.maxres.url : item.snippet.thumbnails.high.url
                 return HTMLData(getURL, thumbnail, titleVid, hasFavorited)
             }).join('')
-
             element.innerHTML = loadedVids;
             favoriteButton(token)
             openAndGenerateModal(token)
             removeLoadingClass()
+            // console.log(myFavorites.length)
+            if (myFavorites.length == 0){
+                element.innerHTML = '<h2>Você não possui videos favoritados</h2>'
+            }
          })
     } catch (error) {
         element.innerHTML = '<h2>OPS, ocorreu um erro ao buscar os videos favoritados, tente novamente em alguns minutos....</h2>'
@@ -232,8 +235,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(token){
         favoritePage(bodyVids, token)
+        const buttonLogged = document.querySelectorAll(".user-login-button")
+        buttonLogged.forEach(function(button){
+            button.innerHTML = 'SAIR';
+            button.removeAttribute("href")
+            button.classList.add("exit")
+            button.addEventListener("click", function(event){
+                event.preventDefault()
+                if(event.currentTarget.classList.contains("exit")){
+                    Cookies.remove('token')
+                    window.location.href = '/'
+                }
+            })
+        })
+        // console.log(myFavorites)
+
+
     }
     else {
         bodyVids.innerHTML = '<h2>Para acessar os seus videos favoritos será necessario realizar o login</h2>'
     }
+
+    const toggleMenuButton = document.querySelector(".menu-mobile")
+    const toggleMenuButtonShadow = document.querySelector(".shadow")
+    const toggleMenuButtonButton = document.querySelector(".close-drawer")
+
+
+    toggleMenuButton.addEventListener("click", function(event){
+        event.preventDefault()
+        toggleMenuButton.closest(".body-content").querySelector(".shadow").classList.add("active")
+    })
+
+    toggleMenuButtonShadow.addEventListener("click", function(event){
+        event.preventDefault()
+        toggleMenuButton.closest(".body-content").querySelector(".shadow").classList.remove("active")
+    })
+    toggleMenuButtonButton.addEventListener("click", function(event){
+        event.preventDefault()
+        toggleMenuButton.closest(".body-content").querySelector(".shadow").classList.remove("active")
+    })
+
 });

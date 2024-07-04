@@ -15,25 +15,46 @@
     <section class="login-area">
         <div class="center-login">
             <form class="form-login">
-
                 <div class="input-container">
-                    <label for="email"> EMAIL: </label>
-                    <input name="email" id="email" type="text">
+                    <label for="email-login"> EMAIL: </label>
+                    <input name="email" id="email-login" type="text">
                 </div>
                 <div class="input-container">
-                    <label for="password">SENHA: </label>
-                    <input name="password" id="password" type="password">
+                    <label for="password-login">SENHA: </label>
+                    <input name="password" id="password-login" type="password">
                 </div>
                 <div class="input-container">
                     <button class="button-submit">LOGIN</button>
                 </div>
                 <div class="input-container">
-                    <span class="toggle-register">Ainda não possui um usuario? <b>Cadastre-se</b>
+                    <span class="toggle-register" data-formtarget="form-register">Ainda não possui um usuario? <b>Cadastre-se</b>
                     </span>
                 </div>
-
+            </form>
+            <form class="form-register hidden">
+                <div class="input-container">
+                    <label for="name-register"> NOME: </label>
+                    <input name="email" id="name-register" type="text">
+                </div>
+                <div class="input-container">
+                    <label for="email-register"> EMAIL: </label>
+                    <input name="email" id="email-register" type="text">
+                </div>
+                <div class="input-container">
+                    <label for="password-register">SENHA: </label>
+                    <input name="password" id="password-register" type="password">
+                </div>
+                <div class="input-container">
+                    <button class="button-submit">CADASTRAR</button>
+                </div>
+                <div class="input-container">
+                    <span class="toggle-register" data-formtarget="form-login">Ja possui uma conta? <b>Fazer login</b>
+                </span>
+                </div>
             </form>
         </div>
+        
+            
     </section>
 
 

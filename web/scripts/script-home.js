@@ -352,6 +352,41 @@ document.addEventListener('DOMContentLoaded', function() {
         searchVids(bodyVids, searchParams, token)
     });
 
+    const toggleMenuButton = document.querySelector(".menu-mobile")
+    const toggleMenuButtonShadow = document.querySelector(".shadow")
+    const toggleMenuButtonButton = document.querySelector(".close-drawer")
+
+
+    toggleMenuButton.addEventListener("click", function(event){
+        event.preventDefault()
+        toggleMenuButton.closest(".body-content").querySelector(".shadow").classList.add("active")
+    })
+
+    toggleMenuButtonShadow.addEventListener("click", function(event){
+        event.preventDefault()
+        toggleMenuButton.closest(".body-content").querySelector(".shadow").classList.remove("active")
+    })
+    toggleMenuButtonButton.addEventListener("click", function(event){
+        event.preventDefault()
+        toggleMenuButton.closest(".body-content").querySelector(".shadow").classList.remove("active")
+    })
+
+    if(token){
+        const buttonLogged = document.querySelectorAll(".user-login-button")
+        buttonLogged.forEach(function(button){
+            button.innerHTML = 'SAIR';
+            button.removeAttribute("href")
+            button.classList.add("exit")
+            button.addEventListener("click", function(event){
+                event.preventDefault()
+                if(event.currentTarget.classList.contains("exit")){
+                    Cookies.remove('token')
+                    window.location.href = '/'
+                }
+            })
+        })
+    }
+
 
     const elemento = document.querySelector('.videos-body');
     let scrollActive = false
