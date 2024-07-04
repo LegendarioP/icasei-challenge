@@ -31,7 +31,6 @@ async function register(name, emailData, passData){
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("DOM LOADED")
     const buttonFormLogin = document.querySelector(".form-login .button-submit")
     const buttonFormRegister = document.querySelector(".form-register .button-submit")
 
@@ -54,11 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleForms.forEach(function (toggleButton) {
         toggleButton.addEventListener("click", function(event){
             event.preventDefault()
-            // console.log("hi")
-
             const firstForm = event.currentTarget.closest("form").classList
             const targetForm = event.currentTarget.closest(".toggle-register").dataset.formtarget
-            // console.log(targetForm)
             if(!firstForm.contains("hidden")){
                 firstForm.add("hidden")
                 let secondForm = event.currentTarget.closest(".center-login").querySelector(`.${targetForm}`).classList

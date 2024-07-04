@@ -74,7 +74,7 @@ function modalHTML(titleVideo, idVideo, isFav, token){
             !event.currentTarget.classList.contains("active") ? favoriteVideo(id_video, favoritedItem, token) : removeFavoritedVideo(id_video, favoritedItem, token)
         }
         else {
-            console.log("voce deve estar logado!")
+            alert("Voce precisa estar logado!")
         }
         
     })
@@ -120,10 +120,7 @@ async function favoriteVideo(idVid, favoritedItem, token) {
                 'Authorization': `Bearer ${token}`,
             }
         }).then(response => {
-            // console.log(response.data)
-            // console.log(favoritedItem)
             myFavorites.push(response.data)
-            
             if(document.querySelectorAll(`[data-id="${idVid}"]`).length > 1){
                 document.querySelector(`.card-video [data-id="${idVid}"]`).closest(".card-video").querySelector(".favorite").classList.add("active")
                 favoritedItem.classList.add("active")
@@ -141,7 +138,6 @@ async function favoriteVideo(idVid, favoritedItem, token) {
 
 async function removeFavoritedVideo(idVid, favoritedItem, token) {
     const item = myFavorites.find(item => item.youtube_idVid == idVid)
-    // console.log(myFavorites)
     try {
         await axios.delete(`http://localhost:3333/favorites/${item.id}`, {
             headers: {
@@ -172,7 +168,7 @@ function favoriteButton(token) {
                 !event.currentTarget.classList.contains("active") ? favoriteVideo(id_video, favoritedItem, token) : removeFavoritedVideo(id_video, favoritedItem, token)    
             }
             else {
-                console.log("voce deve estar logado!")
+                alert("voce deve estar logado!")
             }
         });
     });
@@ -189,7 +185,6 @@ async function homePage (element, token){
                 myFavorites = response.data
                 updateFavoriteValues(myFavorites.length)
            })
-           console.log(myFavorites)
            
         } catch (error) {
             console.error(error)
@@ -200,14 +195,10 @@ async function homePage (element, token){
     try {
         await axios.get('http://localhost:3333/home')
          .then(response => {
-            console.log(response.data)
             const vids = response.data.items
-            // console.log(response.data)
             const loadedVids = vids.map(item => {
                 const getURL = item.id
                 const hasFavorited = myFavorites ? myFavorites.find(item => item.youtube_idVid == getURL) ? true : false : false
-                // console.log(hasFavorited)
-                // console.log(getURL)
                 const titleVid = item.snippet.title
                 const thumbnail = item.snippet.thumbnails.maxres ? item.snippet.thumbnails.maxres.url : item.snippet.thumbnails.high.url
                 return HTMLData(getURL, thumbnail, titleVid, hasFavorited)
@@ -228,9 +219,7 @@ async function homePage (element, token){
 }
 
 async function searchVids (bodyVids, params, token){
-    // console.log(bodyVids)
     bodyVids.classList.add("loading")
-    // console.log(myFavorites)
     try {
         await axios.post('http://localhost:3333/search', {
             searchParams: params,
@@ -238,7 +227,6 @@ async function searchVids (bodyVids, params, token){
         })
          .then(response => {
             const vids = response.data.items
-            // console.log(vids)
             if(!vids.length) throw { message: 'Nenhum vídeo encontrado', code: 404 };
             const loadingVids = vids.map(item => {
                 const getURL = item.id.videoId
@@ -247,8 +235,6 @@ async function searchVids (bodyVids, params, token){
                 const thumbnail = item.snippet.thumbnails.maxres ? item.snippet.thumbnails.maxres.url : item.snippet.thumbnails.high.url
                 return HTMLData(getURL,thumbnail, titleVid, hasFavorited)
             }).join('')
-
-            console.log(response.data)
 
             bodyVids.innerHTML = loadingVids;
             favoriteButton(token)
@@ -268,14 +254,12 @@ async function searchVids (bodyVids, params, token){
 }
 
 async function loadNextVideos(element, token){
-    console.log("entrou no load",nextToken)
     if(nextToken != ''){
         try {
             await axios.post('http://localhost:3333/loadvideos', {
                 pageToken: nextToken
             })
             .then(response => {
-                console.log(response.data)
                 const vids = response.data.items
                 const loadedVids = vids.map(item => {
                     const getURL = item.id
@@ -299,7 +283,6 @@ async function loadNextVideos(element, token){
     }
 }
 async function loadNextSearchVideos(element, token){
-    console.log("entrou no search: ", nextToken)
     if(nextToken != ''){
         try {
             await axios.post('http://localhost:3333/search', {
@@ -307,7 +290,6 @@ async function loadNextSearchVideos(element, token){
                 pageToken: nextToken
             })
             .then(response => {
-                console.log(response.data)
                 const vids = response.data.items
                 const loadedVids = vids.map(item => {
                     const getURL = item.id.videoId
@@ -334,7 +316,6 @@ async function loadNextSearchVideos(element, token){
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('O DOM está pronto!');
     const bodyVids = document.querySelector(".videos-body ul");
     const buttonForm = document.querySelector(".search-button")
     const inputSearch = document.querySelector(".search-bar")
@@ -347,7 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if(inputSearch.value == '') return 
         searchParams = inputSearch.value
         nextToken = '';
-        // console.log(nextToken)
         searchMode = true
         searchVids(bodyVids, searchParams, token)
     });
@@ -400,9 +380,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (scrollPercentage >= 0.9) {
             if(!scrollActive){
                 scrollActive = true
-                searchMode ? loadNextSearchVideos(bodyVids, token) : loadNextVideos(bodyVids, token)
-                
-                // console.log('Você rolou 90% do elemento!');
+                searchMode ? loadNextSearchVideos(bodyVids, token) : loadNextVideos(bodyVids, token)   
             }
         }
         else {

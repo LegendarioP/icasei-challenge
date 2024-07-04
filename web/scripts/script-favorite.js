@@ -71,7 +71,7 @@ function modalHTML(titleVideo, idVideo, isFav, token){
             !event.currentTarget.classList.contains("active") ? favoriteVideo(id_video, favoritedItem, token) : removeFavoritedVideo(id_video, favoritedItem, token)
         }
         else {
-            console.log("voce deve estar logado!")
+            alert("Voce precisa estar logado!")
         }
         
     })
@@ -115,8 +115,6 @@ async function favoriteVideo(idVid, favoritedItem, token) {
                 'Authorization': `Bearer ${token}`,
             }
         }).then(response => {
-            // console.log(response.data)
-            // console.log(favoritedItem)
             myFavorites.push(response.data)
             
             if(document.querySelectorAll(`[data-id="${idVid}"]`).length > 1){
@@ -136,7 +134,6 @@ async function favoriteVideo(idVid, favoritedItem, token) {
 
 async function removeFavoritedVideo(idVid, favoritedItem, token) {
     const item = myFavorites.find(item => item.youtube_idVid == idVid)
-    // console.log(myFavorites)
     try {
         await axios.delete(`http://localhost:3333/favorites/${item.id}`, {
             headers: {
@@ -167,7 +164,7 @@ function favoriteButton(token) {
                 !event.currentTarget.classList.contains("active") ? favoriteVideo(id_video, favoritedItem, token) : removeFavoritedVideo(id_video, favoritedItem, token)    
             }
             else {
-                console.log("voce deve estar logado!")
+                alert("Voce precisa estar logado!")
             }
         });
     });
@@ -185,8 +182,6 @@ async function favoritePage (element, token){
                 myFavorites = response.data
                 updateFavoriteValues(myFavorites.length)
            })
-           console.log(myFavorites)
-           
         } catch (error) {
             console.error(error)
         }
@@ -200,13 +195,10 @@ async function favoritePage (element, token){
             }
         })
          .then(response => {
-            console.log(response.data)
             const vids = response.data.items
             const loadedVids = vids.map(item => {
                 const getURL = item.id
                 const hasFavorited = myFavorites ? myFavorites.find(item => item.youtube_idVid == getURL) ? true : false : false
-                // console.log(hasFavorited)
-                // console.log(getURL)
                 const titleVid = item.snippet.title
                 const thumbnail = item.snippet.thumbnails.maxres ? item.snippet.thumbnails.maxres.url : item.snippet.thumbnails.high.url
                 return HTMLData(getURL, thumbnail, titleVid, hasFavorited)
@@ -215,7 +207,6 @@ async function favoritePage (element, token){
             favoriteButton(token)
             openAndGenerateModal(token)
             removeLoadingClass()
-            // console.log(myFavorites.length)
             if (myFavorites.length == 0){
                 element.innerHTML = '<h2>Você não possui videos favoritados</h2>'
             }
@@ -229,7 +220,6 @@ async function favoritePage (element, token){
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('O DOM está pronto!');
     const bodyVids = document.querySelector(".videos-body ul");
     let token = Cookies.get("token")
 
@@ -248,7 +238,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             })
         })
-        // console.log(myFavorites)
 
 
     }
