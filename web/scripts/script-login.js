@@ -9,6 +9,7 @@ async function login(emailData,passData){
         window.location.href = '/'
     } catch (error) {
         console.error(error)
+        error.response.status == 404 ? alert("usuario não encontrado") : ''
     }
 }
 
@@ -24,6 +25,8 @@ async function register(name, emailData, passData){
         window.location.href = '/'
     } catch (error) {
         console.error(error)
+        error.response.status == 409 ? alert("Usuario com e-mail já cadastrado") : ''
+
     }
 }
 
@@ -38,6 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault()
         var email = document.querySelector(".form-login #email-login").value
         var pass = document.querySelector(".form-login #password-login").value
+
+        if(email == '' || pass == '') {
+            alert("Verifique os campos obrigatorios")
+            return
+        }
         login(email,pass)
     })
 
@@ -46,6 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
         var name = document.querySelector(".form-register #name-register").value
         var email = document.querySelector(".form-register #email-register").value
         var pass = document.querySelector(".form-register #password-register").value
+        if(name = "" || email == '' || pass == '') {
+            alert("Verifique os campos obrigatorios")
+            return
+        }
         register(name, email, pass)
     })
 
