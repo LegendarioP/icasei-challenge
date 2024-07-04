@@ -11,7 +11,7 @@
 
 1. **Clone o repositório**:
    ```
-   git clone https://github.com/seu-usuario/seu-repositorio.git
+   git clone https://github.com/LegendarioP/icasei-challenge.git
    cd seu-repositorio
    cd server
    ```
