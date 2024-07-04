@@ -4,7 +4,11 @@ import { z } from 'zod'
 
 export async function search(app: FastifyInstance) {
   const APIKEY = process.env.YOUTUBE_API_KEY
-
+  if (!APIKEY) {
+    throw new Error(
+      'YOUTUBE_API_KEY não está definido nas variáveis de ambiente',
+    )
+  }
   app.post('/search', async (request) => {
     const bodySchema = z.object({
       searchParams: z.string(),
@@ -26,10 +30,8 @@ export async function search(app: FastifyInstance) {
         },
         APIKEY,
       )
-      // console.log(data)
       return data
     } catch (error) {
-      // app.log.error(error)
       return { error: 'Erro ao buscar dados do YouTube' }
     }
   })

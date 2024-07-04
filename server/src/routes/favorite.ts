@@ -20,6 +20,11 @@ export async function favoriteVids(app: FastifyInstance) {
 
   app.get('/favoritedVideos', async (request) => {
     const APIKEY = process.env.YOUTUBE_API_KEY
+    if (!APIKEY) {
+      throw new Error(
+        'YOUTUBE_API_KEY não está definido nas variáveis de ambiente',
+      )
+    }
     const favorited = await prisma.favorites.findMany({
       where: {
         userId: request.user.sub,

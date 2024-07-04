@@ -4,6 +4,11 @@ import { z } from 'zod'
 
 export async function homeVids(app: FastifyInstance) {
   const APIKEY = process.env.YOUTUBE_API_KEY
+  if (!APIKEY) {
+    throw new Error(
+      'YOUTUBE_API_KEY não está definido nas variáveis de ambiente',
+    )
+  }
   app.get('/home', async () => {
     try {
       const data = await getYouTubeData(
